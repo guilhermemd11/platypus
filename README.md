@@ -25,16 +25,48 @@ $ pip install CoolProp
 
 ## Running
 
-Prior to running platypus, the user is encouraged to open the code and read, on the first lines, the assumptions considered for the model. 
-
-Also, the user must choose some parameters related to the motor of interest by changing the values in the code itself.
-
-After defining these parameters, the user can run the code by starting a Jupyter Notebbok and typing:
+Prior to running platypus, the user is encouraged to open the code and read, on the first lines, the assumptions considered for the model. The code performs a simulation of a nitrous oxide - paraffin hybrid rocket motor. Some inputs from the user are needed, as seen below. For results, use Jupyter notebook, preferably, and import it as
 
 ```
-%matplotlib inline
-import platypusAlpha
+from platypusAlpha import *
 ```
+
+And create a Motor class. Example:
+
+```
+marimbondo = Motor(ambient_temperature = 300,
+                   ambient_pressure = 1.01325,
+                   g = 9.81,
+                   initial_thrust = 2700,
+                   total_impulse = 7900,
+                   chamber_pressure = 35,
+                   chamber_temperature = 3347,
+                   molar_mass = 26.912,
+                   k = 1.1475,
+                   OFratio = 8,
+                   combustion_eff = 0.885,
+                   expansion_eff = 0.95,
+                   nozzle_conv_angle = 30,
+                   nozzle_div_angle = 15,
+                   rho_paraffin = 900,
+                   d_grain = 0.05,
+                   d_chamber = 0.098,
+                   d_tank = 0.11446,
+                   d_vent = 0.001,
+                   Cd = 0.65,
+                   Cd_Vent = 0.65,
+                   oxidiser_mass_multiplier = 1.2)
+```
+
+This will get the motor design. Consider changing the default inputs for different motors.
+
+For the proper simulation, type:
+
+```
+marimbondo.ignite()
+```
+
+After that, the code will already start carrying on the simulation.
 
 The code computes, for each instant of the burning, the following parameters of interest:
 
@@ -43,8 +75,18 @@ The code computes, for each instant of the burning, the following parameters of 
 - Oxidiser tank pressure
 - Oxidiser tank temperature
 - Radius of the paraffin grain
+- Motor's center of mass
+- Motor's axial moment of inertia
+- Motor's transversal moment of inertia
 
-By default the thrust is chosen to be plotted, but the user can define which variables will be plotted by changing the last lines of the code.
+For plotting those variables, the user must type:
+
+```
+marimbondo.plot_VARIABLE^()
+```
+
+Be sure to substitute VARIABLE with the variable of interest, and to check each one of the plotting functions for their required inputs.
+
 
 ## Future versions
 
